@@ -1,0 +1,31 @@
+{
+  "name": "pg6301-ex-3",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/LeanderChristensen/PG6301-ex-3#readme",
+  "bugs": {
+    "url": "https://github.com/LeanderChristensen/PG6301-ex-3/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeanderChristensen/PG6301-ex-3.git"
+  },
+  "license": "ISC",
+  "author": "Leander Christensen",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "prettier --check .",
+    "prepare": "husky",
+    "dev": "vite"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "prettier": "^3.6.2",
+    "vite": "^7.1.4"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  }
+}
