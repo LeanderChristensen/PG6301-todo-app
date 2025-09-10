@@ -1,5 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
+import { BrowserRouter, Route, Routes } from "react-router";
+import { Link, useParams } from "react-router-dom";
+
+function TaskDetail({ tasks }) {
+  const { id } = useParams(); // grabs the "id" from the route
+  const task = tasks[id - 1];
+  if (!task) {
+    return <h2>Task not found</h2>;
+  }
+
+  return (
+    <>
+      <h2>{task.text}</h2>
+      <h2>Completed: {task?.checked?.toString() ?? "Unknown"}</h2>
+    </>
+  );
+}
 
 function Application() {
   const [tasks, setTasks] = useState([]);
@@ -34,7 +51,6 @@ function Application() {
     let a = [...tasks];
     a[id - 1].checked = checked;
     setTasks(a);
-    console.log(tasks);
   }
 
   const listItems = tasks.map((task) => (
@@ -44,18 +60,31 @@ function Application() {
         checked={task.checked}
         onChange={(e) => handleCheck(task.id, task.checked)}
       />
-      {task.text}
+      <Link to={`/tasks/${task.id}`}>{task.text}</Link>
     </li>
   ));
 
   return (
-    <>
-      <ul style={{ listStyleType: "none" }}>{listItems}</ul>
-      <form onSubmit={handleSubmit}>
-        <input id={"text"} />
-      </form>
-    </>
+    <Routes>
+      <Route
+        path={"/"}
+        element={
+          <>
+            <ul style={{ listStyleType: "none" }}>{listItems}</ul>
+            <form onSubmit={handleSubmit}>
+              <input id={"text"} />
+            </form>
+          </>
+        }
+      />
+      <Route path="/tasks/:id" element={<TaskDetail tasks={tasks} />} />
+      <Route path={"*"} element={<h1>Not found</h1>} />
+    </Routes>
   );
 }
 
-createRoot(document.getElementById("root")).render(<Application />);
+createRoot(document.getElementById("root")).render(
+  <BrowserRouter>
+    <Application />
+  </BrowserRouter>,
+);
