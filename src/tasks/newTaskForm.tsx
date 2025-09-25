@@ -10,6 +10,7 @@ export function NewTaskForm({
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
     onNewTask({ title, checked: false });
+    setTitle("");
   }
   return (
     <form onSubmit={handleSubmit}>

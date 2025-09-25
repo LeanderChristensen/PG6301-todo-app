@@ -7,12 +7,11 @@ import { SingleTaskRoute } from "./singleTaskRoute.js";
 const defaultTasks = [
   {
     id: 0,
-    title: "Task 1",
-    description: "Description test here wow cool",
-    checked: true,
+    title: "tasks",
+    checked: false,
   },
-  { id: 1, title: "Task 2", checked: false },
-  { id: 2, title: "Task 3", checked: false },
+  { id: 1, title: "are", checked: false },
+  { id: 2, title: "loading", checked: false },
 ];
 
 export function Application() {

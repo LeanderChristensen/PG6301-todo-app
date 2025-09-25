@@ -46,6 +46,8 @@ function TaskView({
             value={editedDescription}
             onChange={(e) => setEditedDescription(e.target.value)}
           />
+          <br />
+          <br />
           <button style={{ cursor: "pointer" }}>Submit</button>
           <button
             style={{ cursor: "pointer" }}
