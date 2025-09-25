@@ -1,7 +1,14 @@
 import React from "react";
+import type { TaskChangeHandler, TaskItem } from "../taskItem.js";
 import { Link } from "react-router-dom";
 
-export function TaskList({ tasks, onTaskChanged }) {
+export function TaskList({
+  tasks,
+  onTaskChanged,
+}: {
+  tasks: TaskItem[];
+  onTaskChanged: TaskChangeHandler;
+}) {
   return (
     <ul style={{ listStyleType: "none" }}>
       {tasks.map((task) => (

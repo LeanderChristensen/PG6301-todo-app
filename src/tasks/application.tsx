@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { FrontPage } from "./frontPage";
+import type { TaskDelta, TaskItem } from "../taskItem.js";
+import { FrontPage } from "./frontPage.js";
 import { Route, Routes } from "react-router-dom";
-import { SingleTaskRoute } from "./singleTaskRoute";
+import { SingleTaskRoute } from "./singleTaskRoute.js";
 
 const defaultTasks = [
   {
@@ -15,7 +16,7 @@ const defaultTasks = [
 ];
 
 export function Application() {
-  const [tasks, setTasks] = useState(() => {
+  const [tasks, setTasks] = useState<TaskItem[]>(() => {
     const existingTask = localStorage.getItem("tasks");
     return /* existingTask ? JSON.parse(existingTask) : */ defaultTasks;
   });
@@ -24,12 +25,14 @@ export function Application() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  function handleNewTask(task) {
+  function handleNewTask(task: Omit<TaskItem, "id">) {
     setTasks((old) => [...old, { id: old.length, ...task }]);
   }
 
-  function handleTaskChanged(id) {
-    setTasks((old) => old.map((o) => (id === o.id ? { ...o } : o)));
+  function handleTaskChanged(id: number, taskDelta: TaskDelta) {
+    setTasks((old) =>
+      old.map((o) => (id === o.id ? { ...o, ...taskDelta } : o)),
+    );
   }
 
   return (
@@ -45,7 +48,7 @@ export function Application() {
         }
       />
       <Route
-        path="/tasks/:id"
+        path={"/tasks/:id"}
         element={
           <SingleTaskRoute tasks={tasks} onTaskChanged={handleTaskChanged} />
         }

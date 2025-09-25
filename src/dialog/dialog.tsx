@@ -1,7 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import React, { type ReactNode, useEffect, useRef } from "react";
 
-export function Dialog({ isDialogOpen, setIsDialogOpen, children }) {
-  const dialogRef = useRef(null);
+export function Dialog({
+  isDialogOpen,
+  setIsDialogOpen,
+  children,
+}: {
+  isDialogOpen: boolean;
+  setIsDialogOpen: (value: ((prevState: boolean) => boolean) | boolean) => void;
+  children: ReactNode;
+}) {
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
   useEffect(() => {
     if (isDialogOpen) {
       dialogRef.current?.showModal();

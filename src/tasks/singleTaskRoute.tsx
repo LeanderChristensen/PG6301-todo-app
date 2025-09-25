@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import type { TaskChangeHandler, TaskItem } from "../taskItem.js";
 import { Link, useParams } from "react-router-dom";
-import { Dialog } from "../dialog/dialog.jsx";
+import React, { type FormEvent, useState } from "react";
+import { Dialog } from "../dialog/dialog.js";
 
-function TaskView({ task, onTaskChanged }) {
+function TaskView({
+  task,
+  onTaskChanged,
+}: {
+  task: TaskItem;
+  onTaskChanged: TaskChangeHandler;
+}) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editedDescription, setEditedDescription] = useState(
     task.description || "",
   );
 
-  function handleSubmit(event) {
+  function handleSubmit(event: FormEvent) {
     event.preventDefault();
     onTaskChanged(task.id, { description: editedDescription });
     setIsDialogOpen(false);
@@ -32,7 +39,7 @@ function TaskView({ task, onTaskChanged }) {
       <p>
         <Link to={"/"}>View all tasks</Link>
       </p>
-      <Dialog isOpen={isDialogOpen} setIsOpen={setIsDialogOpen}>
+      <Dialog isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen}>
         <form onSubmit={handleSubmit}>
           <h1>Description</h1>
           <textarea
@@ -52,9 +59,15 @@ function TaskView({ task, onTaskChanged }) {
   );
 }
 
-export function SingleTaskRoute({ tasks, onTaskChanged }) {
+export function SingleTaskRoute({
+  tasks,
+  onTaskChanged,
+}: {
+  tasks: TaskItem[];
+  onTaskChanged: TaskChangeHandler;
+}) {
   const { id } = useParams();
-  const task = tasks.find((t) => t.id === parseInt(id));
+  const task = tasks.find((t) => t.id === parseInt(id!));
   if (!task) return <h2>Task not found</h2>;
 
   return <TaskView task={task} onTaskChanged={onTaskChanged} />;
