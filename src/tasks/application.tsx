@@ -1,37 +1,44 @@
 import React, { useEffect, useState } from "react";
-import type { TaskDelta, TaskItem } from "../taskItem.js";
+import type { TaskDelta, TaskItem } from "../../shared/taskItem.js";
 import { FrontPage } from "./frontPage.js";
 import { Route, Routes } from "react-router-dom";
 import { SingleTaskRoute } from "./singleTaskRoute.js";
 
-const defaultTasks = [
-  {
-    id: 0,
-    title: "tasks",
-    checked: false,
-  },
+const loading = [
+  { id: 0, title: "tasks", checked: false },
   { id: 1, title: "are", checked: false },
   { id: 2, title: "loading", checked: false },
 ];
 
 export function Application() {
-  const [tasks, setTasks] = useState<TaskItem[]>(() => {
-    const existingTask = localStorage.getItem("tasks");
-    return /* existingTask ? JSON.parse(existingTask) : */ defaultTasks;
-  });
+  const [tasks, setTasks] = useState<TaskItem[]>(loading);
 
-  useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
-
-  function handleNewTask(task: Omit<TaskItem, "id">) {
-    setTasks((old) => [...old, { id: old.length, ...task }]);
+  async function loadTasks() {
+    const res = await fetch("/api/tasks");
+    setTasks(await res.json());
   }
 
-  function handleTaskChanged(id: number, taskDelta: TaskDelta) {
-    setTasks((old) =>
-      old.map((o) => (id === o.id ? { ...o, ...taskDelta } : o)),
-    );
+  useEffect(() => {
+    loadTasks();
+  }, []);
+
+  async function handleNewTask(task: Omit<TaskItem, "id">) {
+    await fetch("/api/tasks", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(task),
+    });
+    await loadTasks();
+  }
+
+  async function handleTaskChanged(id: number, checked: boolean) {
+    await fetch(`/api/tasks/${id}`, {
+      method: "PUT",
+      body: JSON.stringify({ checked }),
+    });
+    await loadTasks();
   }
 
   return (

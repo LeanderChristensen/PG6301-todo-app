@@ -1,4 +1,4 @@
-import type { TaskChangeHandler, TaskItem } from "../taskItem.js";
+import type { TaskChangeHandler, TaskItem } from "../../shared/taskItem.js";
 import { Link, useParams } from "react-router-dom";
 import React, { type FormEvent, useState } from "react";
 import { Dialog } from "../dialog/dialog.js";
@@ -14,12 +14,12 @@ function TaskView({
   const [editedDescription, setEditedDescription] = useState(
     task.description || "",
   );
-
+  /*
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
     onTaskChanged(task.id, { description: editedDescription });
     setIsDialogOpen(false);
-  }
+  } */
   return (
     <>
       <h2>{task.title}</h2>
@@ -39,6 +39,7 @@ function TaskView({
       <p>
         <Link to={"/"}>View all tasks</Link>
       </p>
+      {/*
       <Dialog isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen}>
         <form onSubmit={handleSubmit}>
           <h1>Description</h1>
@@ -57,6 +58,7 @@ function TaskView({
           </button>
         </form>
       </Dialog>
+      */}
     </>
   );
 }

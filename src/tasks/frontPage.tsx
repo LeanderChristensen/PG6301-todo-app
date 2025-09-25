@@ -1,4 +1,4 @@
-import type { TaskChangeHandler, TaskItem } from "../taskItem.ts";
+import type { TaskChangeHandler, TaskItem } from "../../shared/taskItem.ts";
 import { TaskList } from "./taskList.js";
 import { NewTaskForm } from "./newTaskForm.js";
 import React from "react";

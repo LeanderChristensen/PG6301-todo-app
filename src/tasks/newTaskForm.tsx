@@ -1,5 +1,5 @@
 import React, { type FormEvent, useState } from "react";
-import type { TaskItem } from "../taskItem.ts";
+import type { TaskItem } from "../../shared/taskItem.ts";
 
 export function NewTaskForm({
   onNewTask,

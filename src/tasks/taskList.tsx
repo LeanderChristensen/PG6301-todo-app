@@ -1,5 +1,5 @@
 import React from "react";
-import type { TaskChangeHandler, TaskItem } from "../taskItem.js";
+import type { TaskChangeHandler, TaskItem } from "../../shared/taskItem.js";
 import { Link } from "react-router-dom";
 
 export function TaskList({
@@ -17,11 +17,14 @@ export function TaskList({
             type={"checkbox"}
             checked={task.checked}
             style={{ cursor: "pointer" }}
-            onChange={(e) =>
-              onTaskChanged(task.id, { checked: e.target.checked })
-            }
+            onChange={(e) => onTaskChanged(task.id, e.target.checked)}
           />{" "}
-          <Link to={`/tasks/${task.id}`}>{task.title}</Link>
+          <Link
+            style={{ textDecoration: "none", color: "black" }}
+            to={`/tasks/${task.id}`}
+          >
+            {task.title}
+          </Link>
         </li>
       ))}
     </ul>
