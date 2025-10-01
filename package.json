@@ -17,9 +17,13 @@
   "scripts": {
     "test": "tsc --noEmit && prettier --check .",
     "prepare": "husky",
-    "dev": "vite"
+    "dev": "vite",
+    "postinstall": "cd server && npm install --include=dev",
+    "build": "vite build",
+    "start": "cd server && npm start"
   },
   "devDependencies": {
+    "@types/node": "^24.6.1",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "husky": "^9.1.7",

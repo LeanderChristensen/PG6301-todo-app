@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { serve } from "@hono/node-server";
+import { serveStatic } from "@hono/node-server/serve-static";
 import type { TaskItem } from "../shared/taskItem.js";
 
 const tasks: TaskItem[] = [
@@ -9,6 +10,8 @@ const tasks: TaskItem[] = [
 ];
 
 const app = new Hono();
+
+app.use("*", serveStatic({ root: "../dist" }));
 
 app.get("/api/tasks", (c) => {
   console.log(tasks);
@@ -33,4 +36,5 @@ app.put("/api/tasks/:id", async (c) => {
   return c.newResponse(null, 200);
 });
 
-serve(app);
+const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+serve({ fetch: app.fetch, port });
