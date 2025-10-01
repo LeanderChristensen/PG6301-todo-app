@@ -33,10 +33,10 @@ export function Application() {
     await loadTasks();
   }
 
-  async function handleTaskChanged(id: number, checked: boolean) {
+  async function handleTaskChanged(id: number, checked: TaskDelta) {
     await fetch(`/api/tasks/${id}`, {
       method: "PUT",
-      body: JSON.stringify({ checked }),
+      body: JSON.stringify(checked),
     });
     await loadTasks();
   }

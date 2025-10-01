@@ -17,7 +17,9 @@ export function TaskList({
             type={"checkbox"}
             checked={task.checked}
             style={{ cursor: "pointer" }}
-            onChange={(e) => onTaskChanged(task.id, e.target.checked)}
+            onChange={(e) =>
+              onTaskChanged(task.id, { checked: e.target.checked })
+            }
           />{" "}
           <Link
             style={{ textDecoration: "none", color: "black" }}

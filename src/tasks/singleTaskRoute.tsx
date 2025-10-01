@@ -14,12 +14,11 @@ function TaskView({
   const [editedDescription, setEditedDescription] = useState(
     task.description || "",
   );
-  /*
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
     onTaskChanged(task.id, { description: editedDescription });
     setIsDialogOpen(false);
-  } */
+  }
   return (
     <>
       <h2>{task.title}</h2>
@@ -39,7 +38,6 @@ function TaskView({
       <p>
         <Link to={"/"}>View all tasks</Link>
       </p>
-      {/*
       <Dialog isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen}>
         <form onSubmit={handleSubmit}>
           <h1>Description</h1>
@@ -58,7 +56,6 @@ function TaskView({
           </button>
         </form>
       </Dialog>
-      */}
     </>
   );
 }

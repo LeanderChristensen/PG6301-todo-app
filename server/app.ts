@@ -14,7 +14,7 @@ const app = new Hono();
 app.use("*", serveStatic({ root: "../dist" }));
 
 app.get("/api/tasks", (c) => {
-  console.log(tasks);
+  // console.log(tasks);
   return c.json(tasks);
 });
 
@@ -27,12 +27,12 @@ app.post("/api/tasks", async (c) => {
 app.put("/api/tasks/:id", async (c) => {
   const { id } = c.req.param();
   const delta: Partial<TaskItem> = await c.req.json();
-  console.log(delta);
   const taskIndex = parseInt(id);
   tasks[taskIndex] = {
     ...tasks[taskIndex]!,
     ...delta,
   };
+  console.log(tasks[taskIndex]!);
   return c.newResponse(null, 200);
 });
 
